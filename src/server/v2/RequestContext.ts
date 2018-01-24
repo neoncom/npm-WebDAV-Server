@@ -16,7 +16,8 @@ export class RequestContextHeaders
     contentLength : number
     isSource : boolean
     depth : number
-    host : string
+    host: string
+    parents?: 1 | 0;
 
     constructor(protected headers : { [name : string] : string | string[] })
     {

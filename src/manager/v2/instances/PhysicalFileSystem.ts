@@ -25,7 +25,7 @@ import { Readable, Writable } from 'stream'
 import { join as pathJoin } from 'path'
 import { Errors } from '../../../Errors'
 import { Path } from '../Path'
-import * as fs from 'fs'
+import * as fs from 'fs-extra'
 
 export class PhysicalFileSystemResource
 {
@@ -119,7 +119,13 @@ export class PhysicalFileSystem extends FileSystem
         }
 
         if(ctx.type.isDirectory)
-            fs.mkdir(realPath, callback);
+        { 
+            if (ctx.context.headers.parents === 1) { 
+                fs.mkdirp(realPath, callback);
+            } else { 
+                fs.mkdir(realPath, callback);
+            }
+        }
         else
         {
             if(!fs.constants || !fs.constants.O_CREAT)

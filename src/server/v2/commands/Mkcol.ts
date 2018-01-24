@@ -11,18 +11,20 @@ export default class implements HTTPMethod
                 ctx.getResource((e, r) => {
                     ctx.getResource(ctx.requested.path.getParent(), (e, rParent) => {
                         rParent.type((e, parentType) => {
-                            if(e)
-                            {
-                                if(e === Errors.ResourceNotFound)
-                                    ctx.setCode(HTTPCodes.Conflict);
-                                else if(!ctx.setCodeFromError(e))
-                                    ctx.setCode(HTTPCodes.InternalServerError)
-                                return callback();
-                            }
-                            if(!parentType.isDirectory)
-                            {
-                                ctx.setCode(HTTPCodes.Forbidden);
-                                return callback();
+                            if (!(e === Errors.ResourceNotFound && ctx.headers.parents === 1)) { 
+                                if(e)
+                                {
+                                    if(e === Errors.ResourceNotFound)
+                                        ctx.setCode(HTTPCodes.Conflict);
+                                    else if(!ctx.setCodeFromError(e))
+                                        ctx.setCode(HTTPCodes.InternalServerError)
+                                    return callback();
+                                }
+                                if(!parentType.isDirectory)
+                                {
+                                    ctx.setCode(HTTPCodes.Forbidden);
+                                    return callback();
+                                }
                             }
                             
                             r.create(ResourceType.Directory, (e) => {

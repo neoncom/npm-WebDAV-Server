@@ -15,6 +15,7 @@ export declare class RequestContextHeaders {
     isSource: boolean;
     depth: number;
     host: string;
+    parents?: 1 | 0;
     constructor(headers: {
         [name: string]: string | string[];
     });
