@@ -17,7 +17,7 @@ export class RequestContextHeaders
     isSource : boolean
     depth : number
     host: string
-    parents?: 1 | 0;
+    parents?: string;
 
     constructor(protected headers : { [name : string] : string | string[] })
     {
@@ -45,6 +45,8 @@ export class RequestContextHeaders
         {
             this.contentLength = 0;
         }
+
+        this.parents = this.find('parents');
     }
 
     find(name : string, defaultValue : string = null) : string

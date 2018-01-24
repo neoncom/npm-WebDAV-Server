@@ -120,7 +120,7 @@ export class PhysicalFileSystem extends FileSystem
 
         if(ctx.type.isDirectory)
         { 
-            if (ctx.context.headers.parents === 1) { 
+            if (ctx.context.headers.parents === "1") { 
                 fs.mkdirp(realPath, callback);
             } else { 
                 fs.mkdir(realPath, callback);

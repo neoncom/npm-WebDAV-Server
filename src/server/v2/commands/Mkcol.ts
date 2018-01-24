@@ -11,7 +11,7 @@ export default class implements HTTPMethod
                 ctx.getResource((e, r) => {
                     ctx.getResource(ctx.requested.path.getParent(), (e, rParent) => {
                         rParent.type((e, parentType) => {
-                            if (!(e === Errors.ResourceNotFound && ctx.headers.parents === 1)) { 
+                            if (!(e === Errors.ResourceNotFound && ctx.headers.parents === "1")) { 
                                 if(e)
                                 {
                                     if(e === Errors.ResourceNotFound)
@@ -27,7 +27,7 @@ export default class implements HTTPMethod
                                 }
                             }
                             
-                            r.create(ResourceType.Directory, (e) => {
+                            r.create(ResourceType.Directory, ctx.headers.parents === "1", (e) => {
                                 if(e)
                                 {
                                     if(e === Errors.ResourceAlreadyExists)
